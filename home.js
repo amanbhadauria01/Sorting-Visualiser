@@ -218,47 +218,6 @@ async function insertionSort(heights){
     }
 }
 
-// COCKTAIL SHAKER SORT
-async function cocktailShaker(heights) {
-    let isSorted = true;
-    while (isSorted){
-        for (let i = 0; i< heights.length - 1;i++){
-            if(ahead == false)
-                return;
-            if (heights[i] > heights[i + 1])
-            {
-                let temp = heights[i];
-                heights[i] = heights[i + 1];
-                heights[i+1] = temp;
-                $(bars[i]).height(heights[i]);
-                $(bars[i + 1]).height(heights[i + 1]);
-                await timer(1);
-                isSorted = true;
-            }
-        }
-    
-        if (!isSorted)
-            break;
-    
-        isSorted = false;
-    
-        for (let j = heights.length - 1; j > 0; j--){
-            if(ahead == false)
-                return;
-            if (heights[j-1] > heights[j])
-            {
-                let temp = heights[j];
-                heights[j] = heights[j - 1];
-                heights[j - 1] = temp;
-                $(bars[j]).height(heights[j]);
-                $(bars[j - 1]).height(heights[j - 1]);
-                await timer(1);
-                isSorted = true;
-            }
-        }
-    }
-}
-
 // COUNTING SORT
 async function countingSort(heights, min, max)
 {
@@ -282,43 +241,6 @@ async function countingSort(heights, min, max)
       }
   }
 return heights;
-}
-
-// BOGO SORT
-async function bogoSort(heights){
-    var sortedd = false;
-    while(!sortedd){
-        if(ahead == false)
-                return;
-        var count = heights.length, temp, index;
-
-        while(count > 0){
-            if(ahead == false)
-                return;
-            index = Math.floor(Math.random() * count);
-            count--;
-
-            temp = heights[count];
-            heights[count] = heights[index];
-            heights[index] = temp;
-            $(bars[count]).height(heights[count]);
-            $(bars[index]).height(heights[index]);
-            await timer(1);
-        }
-
-        var i = 1;
-        for(; i < heights.length; i++){
-            if(ahead == false)
-                return;
-            if (heights[i-1] > heights[i]) {
-                break;
-            }
-        }
-        if(i == heights.length) {
-            sortedd = true;
-        }
-    }
-    return heights;
 }
 
 // SHELL SORT
@@ -351,82 +273,6 @@ async function shellSort(heights) {
             increment = parseInt(increment*5 / 11);
         }
     }
-  return heights;
-}
-
-// GNOME SORT
-async function gnomeSort(heights) 
-{
-    for (var j = 1; j < heights.length; j++) 
-    {
-        if (heights[j-1] > heights[j]) {
-            var i = j;
-            for( ; i > 0 && heights[i-1] > heights[i]; i--)
-            {
-                if(ahead == false)
-                    return;
-                var t = heights[i];
-                heights[i] = heights[i-1];
-                heights[i-1] = t;
-                $(bars[i]).height(heights[i]);
-                $(bars[i - 1]).height(heights[i - 1]);
-                await timer(1);
-            }
-        }
-    }
-    return heights;
-}
-
-// COMB SORT
-async function combSort(heights)
-{ 
-  var iteration_count = 0;
-  var gap = heights.length - 2;
-  var decrease_factor = 1.25;
- 
-  // Repeat iterations Until array is not sorted
-  
-  while (true) 
-  {
-        var sorted = true;
-        for (var i = 0; i < heights.length - 1; i++) {
-            if (heights[i] > heights[i + 1]) {
-                sorted = false;
-                break;
-            }
-        }
-        if(sorted)
-            break;
-      // If not first gap  Calculate gap
-      if (iteration_count > 0)
-         gap = (gap == 1) ? gap : Math.floor(gap / decrease_factor);
- 
-  // Set front and back elements and increment to a gap
-      var front = 0;
-      var back = gap;
-      while (back <= heights.length - 1) 
-      {
-          // Swap the elements if they are not ordered
-        
-          if (heights[front] > heights[back])
-          {
-            if(ahead == false)
-                return;
-              var temp = heights[front];
-              heights[front] = heights[back];
-              heights[back] = temp;
-              $(bars[front]).height(heights[front]);
-              $(bars[back]).height(heights[back]);
-              await timer(10);
-          }
- 
-          // Increment and re-run swapping
-        
-          front += 1;
-          back += 1;
-      }
-      iteration_count += 1;
-  }
   return heights;
 }
 
@@ -541,18 +387,10 @@ $("#init").click(function(e) {
         quickSort(heights, 0, heights.length - 1);
     } else if(option == "radix") {
         radixSortLSD(heights);
-    } else if(option == "cocktail") {
-        cocktailShaker(heights);
-    } else if(option == "count") {
+    }else if(option == "count") {
         countingSort(heights, 0, 400);
-    } else if(option == "bogo") {
-        bogoSort(heights);
     } else if(option == "shell") {
         shellSort(heights);
-    } else if(option == "gnome") {
-        gnomeSort(heights);
-    } else if(option == "comb") {
-        combSort(heights);
     } else if(option == "merge") {
         mergeSort(heights);
     }
