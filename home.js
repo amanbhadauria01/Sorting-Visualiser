@@ -174,108 +174,6 @@ async function insertionSort(heights){
     return heights;
 }  
 
-// RADIX LSD SORT
- async function radixSortLSD(heights) {
-    var counter = [
-        []
-      ]; 
-    var max = 0,
-      mod = 10,
-      dev = 1; //max
-    for (var i = 0; i < heights.length; i++) {
-        if(ahead == false)
-            return;
-      if (heights[i] > max) {
-        max = heights[i];
-      }
-    }
-    // determine the large item length
-    var maxDigitLength = (max + '').length;
-    for (var i = 0; i < maxDigitLength; i++, dev *= 10, mod *= 10) {
-      for (var j = 0; j < heights.length; j++) {
-        if(ahead == false)
-            return;
-        var bucket = Math.floor((heights[j] % mod) / dev); // Formula to get the significant digit
-        if (counter[bucket] == undefined) {
-          counter[bucket] = [];
-        }
-        counter[bucket].push(heights[j]);
-      }
-      var pos = 0;
-      for (var j = 0; j < counter.length; j++) {
-        var value = undefined;
-        if (counter[j] != undefined) {
-          while ((value = counter[j].shift()) != undefined) {
-            if(ahead == false)
-                return;
-            heights[pos++] = value;
-            //console.log(heights[pos - 1]);
-            $(bars[pos - 1]).height(heights[pos - 1]);
-            await timer(8);
-          }
-        }
-      }
-    }
-}
-
-// COUNTING SORT
-async function countingSort(heights, min, max)
-{
-  var i, z = 0, count = [];
-
-  for (i = min; i <= max; i++) {
-      count[i] = 0;
-  }
-
-  for (i=0; i < heights.length; i++) {
-      count[heights[i]]++;
-  }
-
-  for (i = min; i <= max; i++) {
-      while (count[i]-- > 0) {
-        if(ahead == false)
-            return;
-          heights[z++] = i;
-          $(bars[z - 1]).height(heights[z - 1]);
-          await timer(10);
-      }
-  }
-return heights;
-}
-
-// SHELL SORT
-async function shellSort(heights) {
-    var increment = heights.length / 2;
-    while (increment > 0) {
-        for (i = increment; i < heights.length; i++) {
-            if(ahead == false)
-                return;
-            var j = i;
-            var temp = heights[i];
-    
-            while (j >= increment && heights[j-increment] > temp) {
-                if(ahead == false)
-                    return;
-                heights[j] = heights[j-increment];
-                $(bars[j]).height(heights[j]);
-                await timer(1);
-                j = j - increment;
-            }
-    
-            heights[j] = temp;
-            $(bars[j]).height(heights[j]);
-            await timer(1);
-        }
-    
-        if (increment == 2) {
-            increment = 1;
-        } else {
-            increment = parseInt(increment*5 / 11);
-        }
-    }
-  return heights;
-}
-
 // MERGE SORT
 async function mergeSort(heights) 
 { 
@@ -365,9 +263,6 @@ async function mergeSort(heights)
    } 
 } 
 
-//mergesort(heights);
-//console.log(heights);
-
 var ahead = false;
 
 $("#init").click(function(e) {
@@ -394,8 +289,6 @@ $("#init").click(function(e) {
     } else if(option == "merge") {
         mergeSort(heights);
     }
-    
-    //console.log(heights);
 });
 
 $("#shuffle").click(function(e) {
